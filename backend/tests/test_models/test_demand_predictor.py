@@ -1,7 +1,7 @@
 import pytest
 import lightgbm as lgb
 import numpy as np
-from backend.models import demand_predictor
+from backend.models import model_input
 
 def test_load_facility_data():
     facility_list = demand_predictor.load_facility_data()

@@ -1,57 +1,44 @@
-import lightgbm as lgb
-import numpy as np
-import csv
 import os
-from datetime import datetime, timedelta
-import pytz
+import pickle
+
+from backend.models import model_input
 
 BASE_DIR = os.path.dirname(__file__)
-FACILITY_PATH = os.path.join(BASE_DIR, '..', 'files', 'station_facilities.csv')
-MODEL_PATH = os.path.join(BASE_DIR, '..', 'files', 'LGBMmodel.txt')
+MODEL_PATH = os.path.join(BASE_DIR, '..', 'files', 'LGBMmodel.pkl')
 
-def load_facility_data():
-    facility_list = []
-    with open(FACILITY_PATH, 'r') as fr:
-        reader = csv.reader(fr)
-        next(reader)
-        for row in reader:
-            facility_list.append(tuple(row))
-    return facility_list
+# 1. LGBM모델 불러오기
+def load_model(model_path):
+    with open(model_path, 'rb') as file:
+        model = pickle.load(file)
+    return model
 
-def load_time_data(month, day, hour):
-    kst = pytz.timezone('Asia/Seoul')
-    now_kst = datetime.now(kst)
-    one_hour_later = now_kst + timedelta(hours=1)
-    year = one_hour_later.year
-    date = datetime(year, month, day, hour) + timedelta(hours=1)
-    if date.weekday() < 5:
-        weekday = 1
-    else:
-        weekday = 0
-    return month, hour, weekday
+# 2. input data 불러오기
+def load_model_input():
+    input_df = model_input.run_model_input_pipeline()
+    return input_df
 
-def combine_facility_with_time(facility_list, month, hour, weekday):
-    combined_list = []
-    for row in facility_list:
-        extended_row = list(row) + [month, hour, weekday]
-        combined_list.append(extended_row)
-    combined_array = np.array(combined_list, dtype=float)
-    return combined_array
+# 3. 수요 예측
+def predict_demand(model, df):
+    feature_cols = [
+        'Rental_Location_ID', 'bus_stop', 'park', 'school', 'subway', 'riverside', 'month', 'hour', 'weekday'
+    ]
+    X = df[feature_cols]
+    predictions = model.predict(X)
 
-def predict_demand_booster(booster, X, facility_list):
-    predictions = booster.predict(X)
-    result = []
-    for i, row in enumerate(facility_list):
-        result.append({
-            'Rental_Location_ID': row[0],
-            'predicted_demand': predictions[i]
-        })
-    return result
+    predictions_df = df[['Rental_Location_ID']].copy()
+    predictions_df['predicted_demand'] = predictions
 
-def run_full_demand_prediction(month, day, hour):
-    booster = lgb.Booster(model_file=MODEL_PATH)
-    facility_list = load_facility_data()
-    m, h, w = load_time_data(month, day, hour)
-    X = combine_facility_with_time(facility_list, m, h, w)
-    predictions = predict_demand_booster(booster, X, facility_list)
-    return predictions
+    return predictions_df
+
+# 4. 전체 파이프라인 실행
+def run_demand_predictor_pipeline():
+    model_path = MODEL_PATH
+    model = load_model(model_path)
+    input_df = load_model_input()
+    result_df = predict_demand(model, df=input_df)
+    return result_df
+
+# 테스트용
+# if __name__ == "__main__":
+#     result = run_demand_predictor_pipeline()
+#     print(result)

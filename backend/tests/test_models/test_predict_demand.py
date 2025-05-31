@@ -1,4 +1,4 @@
-from backend.models import demand_predictor
+from backend.models import model_input
 
 def test_predict_demand():
     model = demand_predictor.load_model()
