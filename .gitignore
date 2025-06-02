@@ -17,3 +17,6 @@ Thumbs.db
 # 기타
 directories.txt
 /backend/views/
+
+# 보안 파일
+.env
