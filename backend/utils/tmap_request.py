@@ -9,29 +9,50 @@ from backend.models import model_input
 def load_startTime():
     start_dt = model_input.load_timedelta() # 예측하려는 시간(현재+1시간)
     dt = datetime.strptime(f"{start_dt}", '%Y-%m-%d %H:%M:%S.%f%z')
-    start_time = dt.strftime('%Y%m%d%H')
+    start_time = dt.strftime('%Y%m%d%H%M')
     return start_time
 
-
+# 실제 move_info에 따라 차후 수정되어야 함
 def mock_move_info():
-    move_info = [1, 2, 3]
+    move_info = [
+        {
+            "viaPointId": "001",
+            "viaPointName": "장소 A",
+            "viaX": "126.95",
+            "viaY": "37.39",
+            "viaDetailAddress": "서울 강남구",
+            "viaTime": 600,
+            "wishStartTime": "202506041400",
+            "wishEndTime": "202506041600"
+        },
+        {
+            "viaPointId": "002",
+            "viaPointName": "장소 B",
+            "viaX": "126.96",
+            "viaY": "37.40",
+            "viaDetailAddress": "서울 서초구",
+            "viaTime": 900,
+            "wishStartTime": "202506041700",
+            "wishEndTime": "202506041900"
+        }
+    ]
     return move_info
 
 
 def build_viaPoints(move_info):
     via_points = []
-    for i in range(len(move_info)):
-        via_point = {} # 초기화
-
-        via_point["viaPointId"] = viaPointId
-        via_point["viaPointName"] = viaPointName
-        via_point["viaX"] = viaX
-        via_point["viaY"] = viaY
-        via_point["viaDetailAddress"] = viaDetailAddress
-        via_point["viaTime"] = viaTime # 단위(초)
-        via_point["wishStartTime"] = wishStartTime
-        via_point["wishEndTime"] = wishEndTime
-
+    for info in move_info:
+        via_point = {
+            "viaPointId":        info["viaPointId"],
+            "viaPointName":      info["viaPointName"],
+            "viaX":              info["viaX"],
+            "viaY":              info["viaY"],
+            "viaDetailAddress":  info["viaDetailAddress"],
+            "viaPoiId":          info.get("viaPoiId", ""),
+            "viaTime":           info["viaTime"],
+            "wishStartTime":     info["wishStartTime"],
+            "wishEndTime":       info["wishEndTime"]
+        }
         via_points.append(via_point)
     return via_points
 
@@ -61,16 +82,6 @@ def build_payload(start_time, via_points):
 
 
 if __name__ == "__main__":
-    # 테스트용 데이터
-    viaPointId= "test01"
-    viaPointName= "name01"
-    viaX= "126.95042955033101"
-    viaY= "37.39952907832974"
-    viaDetailAddress= "2001동, 1001호"
-    viaTime= 900 # 단위(초)
-    wishStartTime= "201606301700"
-    wishEndTime= "201606301900"
-
     start_time = load_startTime()
     move_info = mock_move_info()
     via_points = build_viaPoints(move_info)
