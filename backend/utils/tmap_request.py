@@ -3,11 +3,10 @@
 """
 
 from datetime import datetime
-
-from backend.models import model_input
+from backend.data_loader import time_loader
 
 def load_startTime():
-    start_dt = model_input.load_timedelta() # 예측하려는 시간(현재+1시간)
+    start_dt = time_loader.load_timedelta() # 예측하려는 시간(현재+1시간)
     dt = datetime.strptime(f"{start_dt}", '%Y-%m-%d %H:%M:%S.%f%z')
     start_time = dt.strftime('%Y%m%d%H%M')
     return start_time
