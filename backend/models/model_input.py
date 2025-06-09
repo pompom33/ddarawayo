@@ -5,10 +5,9 @@
 import os
 import pandas as pd
 from backend.data_loader import time_loader
-from backend.data_loader import station_info
+from backend.data_loader import zone_info
 
 BASE_DIR = os.path.dirname(__file__)
-FACILITY_PATH = os.path.join(BASE_DIR, '..', 'files', 'station_facilities.csv')
 
 
 # 1. 입력 데이터프레임 생성
@@ -37,7 +36,14 @@ def prepare_input_dataframe(facility_list, date):
 
 # 2. 전체 파이프라인 실행
 def run_model_input_pipeline():
-    facility_list = station_info.load_facility_data(facility_path=FACILITY_PATH)
+    zone = 'zone1'
+    zone_id_list = zone_info.load_zone_id(zone)
+    facility_list = zone_info.load_facility_data(zone_id_list)
     date = time_loader.load_timedelta()
     input_df = prepare_input_dataframe(facility_list, date)
     return input_df
+
+if __name__ == '__main__':
+    input_df = run_model_input_pipeline()
+    for _, row in input_df.iterrows():
+        print(row)
