@@ -1,7 +1,10 @@
+"""
+대여소별 따릉이 수요 예측을 하는 모델 실행 파이프라인입니다.
+"""
+
 import os
 import pickle
-
-from backend.models import model_input
+import model_input
 
 BASE_DIR = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(BASE_DIR, '..', 'files', 'LGBMmodel.pkl')
@@ -39,6 +42,6 @@ def run_demand_predictor_pipeline():
     return result_df
 
 # 테스트용
-# if __name__ == "__main__":
-#     result = run_demand_predictor_pipeline()
-#     print(result)
+if __name__ == "__main__":
+    result = run_demand_predictor_pipeline()
+    print(result)
