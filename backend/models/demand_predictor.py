@@ -4,7 +4,7 @@
 
 import os
 import pickle
-import model_input
+import .model_input
 
 BASE_DIR = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(BASE_DIR, '..', 'files', 'LGBMmodel.pkl')

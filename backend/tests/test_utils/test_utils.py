@@ -1,8 +1,8 @@
 # parser 테스트
 
-from backend.utils.tmap_request import *
-from backend.utils.tmap_client import send_tmap_request
-# from backend.utils.tmap_parser import *
+from backend.external.tmap.tmap_request import *
+from backend.external.tmap.tmap_client import send_tmap_request
+# from backend.external.tmap.tmap_parser import *
 
 
 if __name__ == "__main__":

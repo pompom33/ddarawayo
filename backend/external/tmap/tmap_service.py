@@ -5,9 +5,9 @@
 4. 필요한 형태로 리턴하는 파이프라인 역할입니다.
 """
 
-from backend.utils.tmap_request import *
-from backend.utils.tmap_client import send_tmap_request
-from backend.utils.tmap_parser import parse_route_summary, parse_via_points
+from backend.external.tmap.tmap_request import *
+from backend.external.tmap.tmap_client import send_tmap_request
+from backend.external.tmap.tmap_parser import parse_route_summary, parse_via_points
 
 def get_route_result(move_info: list[dict]) -> dict:
     # 1. 출발 시간 계산

@@ -3,7 +3,7 @@ Tmap API에 POST 요청을 보내고 응답 JSON을 반환
 """
 
 import requests
-from backend.utils.tmap_config import TMAP_API_KEY, TMAP_REQUEST_URL
+from .tmap_config import TMAP_API_KEY, TMAP_REQUEST_URL
 
 def build_headers():
     headers = {

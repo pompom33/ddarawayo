@@ -1,8 +1,16 @@
+from datetime import datetime
+from backend.data_loader import zone_info
+import requests
+
+# sample url
+url = 'http://openapi.seoul.go.kr:8088/sample/xml/CardSubwayStatsNew/1/5/20220301'
+
+response = requests.get(url)
+print(response.content)
 
 
 # 1. 현재 대여 가능 자전거 수
-def load_stock(zone, month, day, hour):
-    zone_id_list = load_zone_id(zone)
+def load_stock(zone_id_list):
     zone_id_tuple = tuple(zone_id_list)
 
     # user input 시간만 stock 불러옴
@@ -54,3 +62,8 @@ def find_station_status(merged_result): #abundant, deficient labeling 하기
     session['station_status_dict'] = station_status_dict
 
     return station_status_dict # center 까지 포함 (필수) # 순서 X
+
+
+if __name__ == '__main__':
+    zone = 'zone1'
+    zone_id_list = zone_info .load_zone_id(zone)
