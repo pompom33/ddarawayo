@@ -11,6 +11,7 @@ def load_startTime():
     start_time = dt.strftime('%Y%m%d%H%M')
     return start_time
 
+
 # 실제 move_info에 따라 차후 수정되어야 함
 def mock_move_info():
     move_info = [
