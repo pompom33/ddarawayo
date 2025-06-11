@@ -7,7 +7,7 @@ FILES_DIR = os.path.join(BASE_DIR, '..', 'files')
 
 # 1. zone별 대여소ID 불러오기
 def load_zone_id(zone: str) -> list[str]:
-    zone_file = f'{zone}_station_id_list.txt'
+    zone_file = f'zone{zone}_station_id_list.txt'
     zone_id_path = os.path.join(FILES_DIR, zone_file)
 
     zone_id_list = []
@@ -56,7 +56,7 @@ def load_facility_data(zone_id_list) -> list:
 
 
 if __name__ == '__main__':
-    zone = 'zone1'
+    zone = 1
     zone_id_list = load_zone_id(zone)
     station_LatLonName_dict = load_LatLonName(zone_id_list)
     facility_list = load_facility_data(zone_id_list)
