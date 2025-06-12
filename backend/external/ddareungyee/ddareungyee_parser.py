@@ -15,7 +15,7 @@ def parse_and_save_stock(start: int, end: int) -> dict:
         for item in items:
             stationId = item['stationId']
             stock = item['parkingBikeTotCnt']
-            stock_dict[stationId] = stock
+            stock_dict[stationId] = int(stock)
 
     return stock_dict
 
