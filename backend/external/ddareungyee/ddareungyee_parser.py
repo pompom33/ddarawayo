@@ -5,7 +5,7 @@
 from backend.external.ddareungyee.ddareungyee_api import fetch_ddareungyee_stock
 
 # 1. 실시간 대여 가능 자전거 수 (관리 권역 선별X)
-def parse_and_save_stock(start, end):
+def parse_and_save_stock(start: int, end: int) -> dict:
     stock_dict = {}
 
     for i in range(start, end, 500):  # 500은 청크 단위

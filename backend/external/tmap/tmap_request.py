@@ -5,7 +5,7 @@
 from datetime import datetime
 from backend.data_loader import time_loader
 
-def load_startTime():
+def load_startTime()-> str:
     start_dt = time_loader.load_timedelta() # 예측하려는 시간(현재+1시간)
     dt = datetime.strptime(f"{start_dt}", '%Y-%m-%d %H:%M:%S.%f%z')
     start_time = dt.strftime('%Y%m%d%H%M')
@@ -39,7 +39,7 @@ def mock_move_info():
     return move_info
 
 
-def build_viaPoints(move_info):
+def build_viaPoints(move_info: list[dict]) -> list:
     via_points = []
     for info in move_info:
         via_point = {
@@ -57,7 +57,7 @@ def build_viaPoints(move_info):
     return via_points
 
 
-def build_payload(start_time, via_points):
+def build_payload(start_time: str, via_points: list) -> dict:
     payload = {
         "reqCoordType": "WGS84GEO",
         "resCoordType": "WGS84GEO",

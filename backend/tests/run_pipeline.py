@@ -1,7 +1,7 @@
 from backend.models.demand_predictor import run_demand_predictor_pipeline
 from backend.external.ddareungyee.ddareungyee_parser import parse_and_save_stock
 
-def run_pipeline_testing(zone):
+def run_pipeline_demand_stock(zone):
     # 1. 수요 예측값 불러오기 (해당 관리 권역만)
     predictions_dict = run_demand_predictor_pipeline(zone)
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     start = 1001
     end = 3000
 
-    station_summary = run_pipeline_testing(zone)
+    station_summary = run_pipeline_demand_stock(zone)
 
     for key, value in station_summary.items():
         print(key, value)

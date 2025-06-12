@@ -10,7 +10,7 @@ def load_timedelta():
 
 
 # 2. 주중/주말 여부 계산
-def calculate_weekday(date):
+def calculate_weekday(date: datetime) -> int:
     if date.weekday() < 5:
         weekday = 1
     else:

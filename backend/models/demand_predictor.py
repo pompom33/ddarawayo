@@ -4,6 +4,7 @@
 
 import os
 import pickle
+import pandas as pd
 from backend.models import model_input
 
 BASE_DIR = os.path.dirname(__file__)
@@ -17,13 +18,13 @@ def load_model(model_path):
 
 
 # 2. input data 불러오기
-def load_model_input(zone):
+def load_model_input(zone: int) -> pd.DataFrame:
     input_df = model_input.run_model_input_pipeline(zone)
     return input_df
 
 
 # 3. 수요 예측
-def predict_demand(model, df):
+def predict_demand(model, df) -> pd.DataFrame:
     feature_cols = [
         'Rental_Location_ID', 'bus_stop', 'park', 'school', 'subway', 'riverside', 'month', 'hour', 'weekday'
     ]
@@ -36,7 +37,7 @@ def predict_demand(model, df):
     return predictions_df
 
 
-def run_demand_predictor_pipeline(zone):
+def run_demand_predictor_pipeline(zone: int) -> dict:
     model_path = MODEL_PATH
     model = load_model(model_path)
     input_df = load_model_input(zone)

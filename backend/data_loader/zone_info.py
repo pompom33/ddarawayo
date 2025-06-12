@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILES_DIR = os.path.join(BASE_DIR, '..', 'files')
 
 # 1. zone별 대여소ID 불러오기
-def load_zone_id(zone: str) -> list[str]:
+def load_zone_id(zone: int) -> list[str]:
     zone_file = f'zone{zone}_station_id_list.txt'
     zone_id_path = os.path.join(FILES_DIR, zone_file)
 
@@ -19,7 +19,7 @@ def load_zone_id(zone: str) -> list[str]:
 
 
 # 2. zone별 대여소 이름 및 위도 경도 데이터 불러오기
-def load_LatLonName(zone_id_list) -> Dict[str, Dict[str, str]]:
+def load_LatLonName(zone_id_list: list) -> Dict[str, Dict[str, str]]:
     station_LatLonName_file = 'station_name_latlon.csv'
     station_LatLonName_path = os.path.join(FILES_DIR, station_LatLonName_file)
 
@@ -40,7 +40,7 @@ def load_LatLonName(zone_id_list) -> Dict[str, Dict[str, str]]:
 
 
 # 3. zone별 대여소 주변 시설 정보
-def load_facility_data(zone_id_list) -> list:
+def load_facility_data(zone_id_list: list) -> list:
     facility_file = 'station_facilities.csv'
     facility_path = os.path.join(FILES_DIR, facility_file)
 

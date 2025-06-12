@@ -7,7 +7,7 @@ load_dotenv()
 DDAREUNGYEE_API_KEY = os.getenv("DDAREUNGYEE_API_KEY")
 DDAREUNGYEE_REQUEST_BASE_URL = os.getenv("DDAREUNGYEE_REQUEST_BASE_URL")
 
-def fetch_ddareungyee_stock(start, end):
+def fetch_ddareungyee_stock(start: int, end: int) -> dict:
     start_index = start
     end_index = end
     url = f"{DDAREUNGYEE_REQUEST_BASE_URL}/{DDAREUNGYEE_API_KEY}/json/bikeList/{start_index}/{end_index}/"
