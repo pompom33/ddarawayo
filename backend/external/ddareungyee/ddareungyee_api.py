@@ -19,11 +19,15 @@ def fetch_ddareungyee_stock(start, end):
     if not response.ok:
         raise Exception(f"API 요청 실패: {response.status_code} - {response.text}")
 
-    return response.json()
+    try:
+        return response.json()
+    except ValueError:
+        raise Exception(f"JSON 디코딩 실패! 응답 본문: {response.text}")
+
 
 if __name__ == "__main__":
     start = 2001
-    end = 2005
+    end = 2010
     result = fetch_ddareungyee_stock(start, end)
 
     rows = result['rentBikeStatus']['row']
