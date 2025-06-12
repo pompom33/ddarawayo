@@ -35,8 +35,7 @@ def prepare_input_dataframe(facility_list, date):
 
 
 # 2. 전체 파이프라인 실행
-def run_model_input_pipeline():
-    zone = 'zone1'
+def run_model_input_pipeline(zone):
     zone_id_list = zone_info.load_zone_id(zone)
     facility_list = zone_info.load_facility_data(zone_id_list)
     date = time_loader.load_timedelta()
@@ -44,6 +43,7 @@ def run_model_input_pipeline():
     return input_df
 
 if __name__ == '__main__':
-    input_df = run_model_input_pipeline()
+    zone = 1
+    input_df = run_model_input_pipeline(zone)
     for _, row in input_df.iterrows():
         print(row)

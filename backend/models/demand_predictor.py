@@ -4,7 +4,7 @@
 
 import os
 import pickle
-import model_input
+from backend.models import model_input
 
 BASE_DIR = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(BASE_DIR, '..', 'files', 'LGBMmodel.pkl')
@@ -15,10 +15,12 @@ def load_model(model_path):
         model = pickle.load(file)
     return model
 
+
 # 2. input data 불러오기
-def load_model_input():
-    input_df = model_input.run_model_input_pipeline()
+def load_model_input(zone):
+    input_df = model_input.run_model_input_pipeline(zone)
     return input_df
+
 
 # 3. 수요 예측
 def predict_demand(model, df):
@@ -33,15 +35,23 @@ def predict_demand(model, df):
 
     return predictions_df
 
-# 4. 전체 파이프라인 실행
-def run_demand_predictor_pipeline():
+
+def run_demand_predictor_pipeline(zone):
     model_path = MODEL_PATH
     model = load_model(model_path)
-    input_df = load_model_input()
-    result_df = predict_demand(model, df=input_df)
-    return result_df
+    input_df = load_model_input(zone)
+    predictions_df = predict_demand(model, df=input_df)
+
+    predictions_dict = {}
+    for _, row in predictions_df.iterrows():
+        predictions_dict[row['Rental_Location_ID']] = row['predicted_demand']
+
+    return predictions_dict
+
 
 # 테스트용
 if __name__ == "__main__":
-    result = run_demand_predictor_pipeline()
-    print(result)
+    zone = 1
+    predictions_dict = run_demand_predictor_pipeline(zone)
+    for key, value in predictions_dict.items():
+        print(key, value)
