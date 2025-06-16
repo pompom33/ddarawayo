@@ -1,11 +1,13 @@
 ![Image](https://github.com/user-attachments/assets/a8eb4fc4-e734-4be4-a115-5a09e0228041)
 
 
-# 🚲 따르왕 | 서울시 공공자전거 재배치 경로 및 스케줄 최적화 시스템
+# 🚲 서울시 공공자전거 재배치 경로 및 스케줄 최적화 시스템
 서울시 공공자전거 따릉이의 자전거 재고 불균형 문제를 해결하기 위한 수요 기반 재배치 경로 최적화 서비스입니다. </br>
 배송 인력에게 시간대별 권역 내 최적 동선을 안내하여 재배치 효율성과 따릉이 이용 품질 향상을 목표로 합니다.
 
 ## 📺 [서비스 데모 영상(v1)](https://drive.google.com/file/d/1N8SdPq4LX2NF92GhWPBNJ8Kl4aYglPzw/view?usp=sharing)
+## 📋 [Notion 페이지](https://past-brazil-18f.notion.site/ebd/213ccc61484380119d1fc36d1c146cce)
+
 
 ## 🧠 핵심 기술 스택 및 기능 구성
 
